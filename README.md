@@ -1,2 +1,7 @@
-# pandoc-markdown
-Simple Chinese translation of Pandoc Markdown
+# Simple Chinese Translation of Pandoc Markdown
+
+English manual:
+http://pandoc.org/MANUAL.html#pandocs-markdown
+
+Traditional Chinese translation:
+http://pages.tzengyuxio.me/pandoc/#raw-html
