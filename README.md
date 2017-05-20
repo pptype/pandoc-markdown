@@ -1,4 +1,4 @@
-# Simple Chinese Translation of Pandoc Markdown
+# Simplified Chinese Translation of Pandoc Markdown
 
 English manual:
 http://pandoc.org/MANUAL.html#pandocs-markdown
