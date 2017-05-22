@@ -1,47 +1,42 @@
-% [Pandoc's Markdown 语法中文翻译][home]
-% by John MacFarlane; Translated by [Tzeng Yuxio](http://tzengyuxio.me)
-
-[home]: http://pages.tzengyuxio.me/pandoc/
+% [Pandoc's Markdown]
+% by John MacFarlane; Translated by [PPType](http://github.com/pptype) based on the Traditional Chinese Translation by [Tzeng Yuxio](http://pages.tzengyuxio.me/pandoc)
 
 前言
 --------
-这份文档是 [Pandoc][] 版本 Markdown 语法的中文翻译。Pandoc 本身是由 [John MacFarlane][] 所开发的文档转换工具，可以在 HTML, Markdown, PDF, TeX...等等格式之间进行转换。有许多喜欢纯文本编辑的人，利用 Pandoc 来进行论文的撰写或投影片制作。但除了转换的功能外，Pandoc 所定义的 Markdown 扩充语法也是这套工具的一大亮点，在 Pandoc 的官方使用说明文档中，光是其针对 Markdown 格式的扩充就占了整整一半左右的篇幅。 
+本文档是 [Pandoc][] 版 Markdown 语法的简体中文翻译。Pandoc 本身是由 [John MacFarlane][] 所开发的文档转换工具，可以在 HTML, Markdown, PDF, TeX 等格式之间进行转换。有许多喜欢纯文本编辑的人，利用 Pandoc 进行论文撰写或投影片制作。除了转换功能外，Pandoc 所定义的 Markdown 扩展语法也是这套工具的一大亮点，在 Pandoc 的官方文档中，仅针对 Markdown 格式的扩展说明就占了一半左右的篇幅。
 
-本文档翻译自 [Pandoc - Pandoc User’s Guide][userguide] 中的 "Pandoc's markdown" 一节。你可以看看[这份文档的源文件][source]、产生文档[所使用的 HTML 范本][template]，以及[转换时的命令参数][script]。
+本文档翻译自 [Pandoc - Pandoc User’s Guide][userguide] 中的 "Pandoc's Markdown" 一节。你可以在 GitHub 上查看这份文档的[源文件][source]。
 
 [John MacFarlane]: http://johnmacfarlane.net/
-[pandoc]: http://johnmacfarlane.net/pandoc/
-[userguide]: http://johnmacfarlane.net/pandoc/README.html#pandocs-markdown
-[source]: https://raw.github.com/tzengyuxio/pages/gh-pages/pandoc/pandoc.markdown
-[template]: https://github.com/tzengyuxio/pages/blob/gh-pages/pandoc/pm-template.html5
-[script]: https://github.com/tzengyuxio/pages/blob/gh-pages/pandoc/convert.sh
+[pandoc]: http://pandoc.org
+[userguide]: http://pandoc.org/MANUAL.html
+[source]: https://github.com/pptype/pandoc-markdown/simplified-chinese.md
 
 以下翻译开始。
 
 ----
 
-Pandoc's markdown
+Pandoc's Markdown
 =================
 
-与 John Gruber 的 原始 [markdown] 相比，Pandoc 版本的 markdown 在语法上有额外的扩充与些许的修正。这份文档解释了这些语法，并指出其与原始 markdown 的差异所在。除非特别提到，不然这些差异均可借由使用 `markdown_strict` 而非 `markdown` 的格式来关闭。单独一项扩充也可透过 `+EXTENSION` 或 `-EXTENSION` 的方式来开启或关闭。例如，`markdown_strict+footnotes` 表示加上脚注扩充的原始 markdown，而 `markdown-footnotes-pipe_tables` 则是拿掉了脚注与管线表格扩充的 pandoc markdown。
+与 John Gruber 的 原始 [Markdown] 相比，Pandoc 版本的 Markdown 在语法上进行了扩展和少许修正。本文档解释了这些语法，并指出其与标准 Markdown 的差异。除非特别提到，这些差异均可借由使用 `markdown_strict` 而非 `markdown` 的格式来消除。一项扩展可通过 `+EXTENSION` 或 `-EXTENSION` 的方式来开启或关闭。例如，`markdown_strict+footnotes` 表示加上脚注扩展的严格 Markdown，而 `markdown-footnotes-pipe_tables` 则是去掉了脚注与管线表格扩展的 pandoc Markdown。
 
 哲学
 ----------
 
-Markdown 是针对易于书写与阅读的目标而设计的，特别是在易于阅读这点上尤为重要：
+Markdown 的设计目标是易于书写，而更重要的是易于阅读：
 
-> 一份 Markdown 格式的文档应该要能以纯文本形式直接发表，并且一眼看过去不存在任何标记用的标签或格式指令。
+> 一份 Markdown 格式的文档应该能原封不动地以纯文本形式发表，并且看上去不像是被标签或格式指令标记过。
 > <small>[John Gruber](http://daringfireball.net/projects/markdown/syntax#philosophy)</small>
 
-这项原则同样也是 pandoc 在制订表格、脚注以及其他扩充的语法时，所依循的规范。
+Pandoc 在制订表格、脚注以及其他扩展的语法时都遵循了这项原则。
 
-然而，pandoc 的目标与原始 markdown 的最初目标有着方向性的不同。在 markdown 原本的设计中，HTML 是其主要输出对象；然而 pandoc 则是针对多种输出格式而设计。因此，虽然 pandoc 同样也允许直接嵌入 HTML 标签，但并不鼓励这样的作法，取而代之的是 pandoc 提供了许多非 HTML 的方式，来让用户输入像是定义清单、表格、数学公式以及脚注等诸如此类的重要文档元素。
-
+不过，pandoc 是针对多种输出格式设计的，而 Markdown 最初主要考虑的是生成 HTML，两者在这方面目标不同。因此虽然 pandoc 允许直接嵌入原始 HTML，但并不鼓励这样做，而是提供了许多非 HTML 风格的方式，让用户输入定义清单、表格、数学公式以及脚注等重要文档元素。
 
 段落
 ----------
 
-一个段落指的是一行以上的文本，跟在一行以上的空白行之后。换行字符会被当作是空白处理，因此你可以依自己喜好排列段落文本。如果你需要强制换行，在行尾放上两个以上的空白字符即可。
+一个段落指的是一行及以上的文本，后面紧跟着一个或多个空行。换行字符会被当作是空白处理，因此你可以依自己喜好排列段落文本。如果你需要强制换行，在行尾放上两个以上的空白字符即可。
 
 **Extension: `escaped_line_breaks`**
 
@@ -401,7 +396,7 @@ Markdown 使用 email 的习惯来创建引言区块。一个引言区块可以�
         (C) 2007 Joe Smith
 
     这样的叙述被解释成清单项目。在这情形下，可以使用反斜线：
-    
+
         (C\) 2007 Joe Smith
 
 **Extension: `startnum`**
@@ -866,19 +861,19 @@ Markdown, LaTeX, Org-Mode, ConTeXt
 
 reStructuredText
   ~ 公式会使用 [此处](http://www.american.edu/econ/itex2mml/mathhack.rst) 所描述的 `:math:` 这个 "interpreted text role" 来进行演算编排。
-  
+
 AsciiDoc
   ~ 公式会以 `latexmath:[...]` 演算编排。
 
 Texinfo
   ~ 公式会在 `@math` 指令中演算编排。
-  
+
 groff man
   ~ 公式会以去掉 `$` 后的字面文本演算编排。
 
 MediaWiki
   ~ 公式会在 `<math>` 标签中演算编排。
-  
+
 Textile
   ~ 公式会在 `<span class="math">` 标签中演算编排。
 
@@ -890,15 +885,15 @@ Docbook
 
 Docx
   ~ 公式会以 OMML 数学标记的方式演算编排。
-  
+
 FictionBook2
   ~ 如果有使用 `--webtex` 选项，公式会以 Google Charts 或其他兼容的网络服务演算编排为图片，并下载嵌入于电子书中。否则就会以字面文本显示。
-  
+
 HTML, Slidy, DZSlides, S5, EPUB
   ~ 公式会依照以下命令行选项的设置，以不同的方法演算编排为 HTML 代码。
 
     1.  缺省方式是将 TeX 数学公式尽可能地以 unicode 字符演算编排，如同 RTF、DocBook 以及 OpenDocument 的输出。公式会被放在附有属性 `class="math"` 的 `span` 标签内，所以可以在需要时给予不同的样式，使其突出于周遭的文本内容。
-    
+
     2.  如果使用了 `--latexmathml` 选项，TeX 数学公式会被显示于 `$` 或 `$$` 字符中，并放在附带 `LaTeX` 类别的 `<span>` 标签里。这段内容会用 [LaTeXMathML] script 演算编排为数学公式。（这个方法无法适用于所有浏览器，但在 Firefox 中是有效的。在不支持 LaTeXMathML 的浏览器中，TeX 数学公式会单纯的以两个 `$` 字符间的字面文本呈现。）
 
     3.  如果使用了 `--jsmath` 选项，TeX数学公式会放在 `<span>` 标签（用于行内数学公式）或 `<div>` 标签（用于区块数学公式）中，并附带类别属性 `math`。这段内容会使用 [jsMath] script 来演算编排。
@@ -912,7 +907,7 @@ HTML, Slidy, DZSlides, S5, EPUB
             # produces myfile.html and images in myfile-images
 
     6.  如果使用了 `--webtex` 选项，TeX 数学公式会被转换为 `<img>` 标签并链接到一个用以转换公式为图片的外部 script。公式将会编码为 URL 可接受格式并且与指定的 URL 参数串接。如果没有指定 URL，那么将会使用 Google Chart API (`http://chart.apis.google.com/chart?cht=tx&chl=`)。
-    
+
     7.  如果使用了 `--mathjax` 选项，TeX 数学公式将会被包在 `\(...\)`（用于行内数学公式）或 `\[...\]`（用于区块数学公式）之间显示，并且放在附带类别 `math` 的 `<span>` 标签之中。这段内容会使用 [MathJax] script 演算编排为页面上的数学公式。
 
 [LaTeXMathML]: http://math.etsu.edu/LaTeXMathML/
@@ -926,7 +921,7 @@ Raw HTML
 
 **Extension: `raw_html`**
 
-Markdown 允许你在文档中的任何地方插入原始 HTML（或 DocBook）指令（除了在字面文本上下文处，此时的 `<`, `>` 和 `&` 都会按其字面意义显示）。（技术上而言这不算扩充功能，因为原始 markdown 本身就有提供此功能，但做成扩充形式便可以在有特殊需要的时候关闭此功能。）
+Markdown 允许你在文档中的任何地方插入原始 HTML（或 DocBook）指令（除了在字面文本上下文处，此时的 `<`, `>` 和 `&` 都会按其字面意义显示）。（技术上而言这不算扩展功能，因为原始 markdown 本身就有提供此功能，但做成扩展形式便可以在有特殊需要的时候关闭此功能。）
 
 输出 HTML, S5, Slidy, Slideous, DZSlides, EPUB, Markdown 以及 Textile 等格式时，原始 HTML 代码会不作修改地保留至输出文件中；而其他格式的输出内容则会将原始 HTML 代码去除掉。
 
@@ -985,7 +980,7 @@ LaTeX 宏
 
 **Extension: `latex_macros`**
 
-当输出格式不是 LaTeX 时，pandoc 会分析 LaTeX 的 `\newcommand` 和 `\renewcommand` 定义，并套用其产生的宏到所有 LaTeX 数学公式中。所以，举例来说，下列指令对于所有的输出格式均有作用，而非仅仅作用于 LaTeX 格式： 
+当输出格式不是 LaTeX 时，pandoc 会分析 LaTeX 的 `\newcommand` 和 `\renewcommand` 定义，并套用其产生的宏到所有 LaTeX 数学公式中。所以，举例来说，下列指令对于所有的输出格式均有作用，而非仅仅作用于 LaTeX 格式：
 
     \newcommand{\tuple}[1]{\langle #1 \rangle}
 
@@ -1192,3 +1187,7 @@ Pandoc 能够以数种形式自动产生引用与参考书目（使用 Andrea Ro
 
 [markdown]: http://daringfireball.net/projects/markdown/
 [reStructuredText]: http://docutils.sourceforge.net/docs/ref/rst/introduction.html
+
+
+本简体中文译本是基于曾于修([Tzeng Yuxio](http://tzengyuxio.me)) 的繁体字译本:
+[home]: http://pages.tzengyuxio.me/pandoc/
