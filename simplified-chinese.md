@@ -321,75 +321,75 @@ Markdown 使用 email 的习惯来创建引用区块。一个引用区块可以�
 
 ### 无序列表 ###
 
-无序列表是以项目符号作枚举的列表。每条项目都以项目符号 (`*`, `+` 或 `-`) 作开头。下面是个简单的例子：
+无序列表 (bullet list) 是以项目符号作枚举的列表。每条项目都以项目符号 (`*`, `+` 或 `-`) 作开头。下面是个简单的例子：
 
-    * one
-    * two
-    * three
+    * 一
+    * 二
+    * 三
 
-这会产生一个「紧凑」列表。如果你想要一个「宽松」列表，也就是说以段落格式处理每个项目内的文本内容，那么只要在每个项目间加上空格行即可：
+这会产生一个“紧凑”的列表。如果你想要一个“宽松”的列表，也就是说以段落格式处理每个项目的文本，那么只要在每个项目间加上空行即可：
 
-    * one
+    * 一
 
-    * two
+    * 二
 
-    * three
+    * 三
 
 项目符号不能直接从行首最左边处输入，而必须以一至三个空格作缩进。项目符号后必须跟着一个空格。
 
 列表项目中的接续行，若与该项目的第一行文本对齐（在项目符号之后），看上去会较为美观：
 
-    * here is my first
-      list item.
-    * and my second.
+    * 这是我的第一个
+      列表项目。
+    * 然后第二个。
 
-但 markdown 也允许以下「偷懒」的格式：
+但 Markdown 也允许以下“偷懒”的格式：
 
-    * here is my first
-    list item.
-    * and my second.
+    * 这是我的第一个
+    列表项目。
+    * 然后第二个。
 
 ### 四个空格规则 ###
 
-一个列表项目可以包含多个段落以及其他区块等级的内容。然而，后续的段落必须接在空行之后，并且以四个空格或一个 tab 作缩进。因此，如果项目里第一个段落与后面段落对齐的话（也就是项目符号前置入两个空格），看上去会比较整齐美观：
+一个列表项目可以包含多个段落以及其他区块级的内容。然而，后续的段落必须接在空行之后，并且以四个空格或一个 tab 作缩进。因此，如果项目里第一个段落与后面段落对齐的话（也就是项目符号前置入两个空格），看上去会比较整齐美观：
 
-      * First paragraph.
+      * 第一段。
 
-        Continued.
+        继续。
 
-      * Second paragraph. With a code block, which must be indented
-        eight spaces:
+      * 第二段。包含代码区块，因此必须缩进
+        八个空格。
 
             { code }
 
-列表项目也可以包含其他列表。在这情况下前置的空行是可有可无的。嵌套列表必须以四个空格或一个 tab 作缩进：
+列表项目也可以包含其他列表。在这种情况下前置的空行是可有可无的。嵌套列表必须以四个空格或一个 tab 作缩进：
 
-    * fruits
-        + apples
-            - macintosh
-            - red delicious
-        + pears
-        + peaches
-    * vegetables
-        + brocolli
-        + chard
+    * 水果
+        + 苹果
+            - 麦金托什
+            - 红色 好吃
+        + 梨
+        + 桃
+    * 蔬菜
+        + 花椰菜
+        + 叶甜菜
 
-上一节提到，markdown 允许你以「偷懒」的方式书写，项目的接续行可以不和第一行对齐。不过，如果一个列表项目中包含了多个段落或是其他区块元素，那么每个元素的第一行都必须缩进对齐。
+上一节提到，Markdown 允许你以“偷懒”的方式书写，项目的接续行可以不和第一行对齐。不过，如果一个列表项目中包含了多个段落或是其他区块元素，那么每个元素的第一行都必须缩进对齐。
 
-    + A lazy, lazy, list
-    item.
+    + 一个懒，懒的，列表
+    项目。
 
-    + Another one; this looks
-    bad but is legal.
+    + 再来一个；这看起来
+    很糟，但是符合规则。
 
-        Second paragraph of second
-    list item.
+        第二个项目的第二段
+    内容。
 
-**注意：**尽管针对接续段落的「四个空格规则」是出自于官方的 [markdown syntax guide]，但是作为对应参考用的 `Markdown.pl` 实作版本中并未遵循此一规则。所以当输入时若接续段落的缩进少于四个空格时，pandoc 所输出的结果会与 `Markdown.pl` 的输出有所出入。
+**注意：**尽管针对接续段落的“四个空格规则”是出自于官方的 [Markdown syntax guide]，但是作为对应参考用的 `Markdown.pl` 实现版本中并未遵循此一规则。所以当输入时若接续段落的缩进少于四个空格时，pandoc 所输出的结果会与 `Markdown.pl` 的输出有所出入。
 
-在 [markdown syntax guide] 中并未明确表示「四个空格规则」是否一体适用于 **所有** 位于列表项目里的区块元素上；规范文档中只提及了段落与代码区块。但文档暗示了此规则适用于所有区块等级的内容（包含嵌套列表），并且 pandoc 以此方向进行解读与实作。
+在 [Markdown syntax guide] 中并未明确表示“四个空格规则”是否适用于 **所有** 位于列表项目里的区块元素；规范文档中只提及了段落与代码区块。但文档暗示了此规则适用于所有区块等级的内容（包含嵌套列表），所以 pandoc 以此为方向进行了解读与实现。
 
-  [markdown syntax guide]:
+  [Markdown syntax guide]:
     http://daringfireball.net/projects/markdown/syntax#list
 
 ### 有序列表 ###
@@ -508,7 +508,7 @@ Pandoc 支持定义列表，其语法的灵感来自于 [PHP Markdown Extra] 以
 
 ### 紧凑与宽松列表 ###
 
-在与列表相关的「边界处理」上，Pandoc 与 `Markdown.pl` 有着不同的处理结果。考虑如下代码：
+在与列表相关的“边界处理”上，Pandoc 与 `Markdown.pl` 有着不同的处理结果。考虑如下代码：
 
     +   First
     +   Second:
@@ -518,7 +518,7 @@ Pandoc 支持定义列表，其语法的灵感来自于 [PHP Markdown Extra] 以
 
     +   Third
 
-Pandoc 会将以上列表转换为「紧凑列表」（在 "First", "Second" 或 "Third" 之中没有 `<p>` 标签），而 markdown 则会在 "Second" 与 "Third" （但不包含 "First"）里面置入 `<p>` 标签，这是因为 "Third" 之前的空行而造成的结果。Pandoc 依循着一个简单规则：如果文本后面跟着空行，那么就会被视为段落。既然 "Second" 后面是跟着一个列表，而非空行，那么就不会被视为段落了。至于子列表的后面是不是跟着空行，那就无关紧要了。（注意：即使是设置为 `markdown_strict` 格式，Pandoc 仍是依以上方式处理列表项目是否为段落的判定。这个处理方式与 markdown 官方语法规范里的描述一致，然而却与 `Markdown.pl` 的处理不同。）
+Pandoc 会将以上列表转换为“紧凑列表”（在 "First", "Second" 或 "Third" 之中没有 `<p>` 标签），而 markdown 则会在 "Second" 与 "Third" （但不包含 "First"）里面置入 `<p>` 标签，这是因为 "Third" 之前的空行而造成的结果。Pandoc 依循着一个简单规则：如果文本后面跟着空行，那么就会被视为段落。既然 "Second" 后面是跟着一个列表，而非空行，那么就不会被视为段落了。至于子列表的后面是不是跟着空行，那就无关紧要了。（注意：即使是设置为 `markdown_strict` 格式，Pandoc 仍是依以上方式处理列表项目是否为段落的判定。这个处理方式与 markdown 官方语法规范里的描述一致，然而却与 `Markdown.pl` 的处理不同。）
 
 
 ### 结束一个列表 ###
@@ -530,9 +530,9 @@ Pandoc 会将以上列表转换为「紧凑列表」（在 "First", "Second" 或
 
         { my code block }
 
-问题大了！这边 pandoc（其他的 markdown 实作也是如此）会将 `{ my code block }` 视为 `item two` 这个列表项目的第二个段落来处理，而不会将其视为一个代码区块。
+问题大了！这边 pandoc（其他的 markdown 实现也是如此）会将 `{ my code block }` 视为 `item two` 这个列表项目的第二个段落来处理，而不会将其视为一个代码区块。
 
-要在 `item two` 之后「切断」列表，你可以插入一些没有缩进、输出时也不可见的内容，例如 HTML 的注解：
+要在 `item two` 之后“切断”列表，你可以插入一些没有缩进、输出时也不可见的内容，例如 HTML 的注解：
 
     -   item one
     -   item two
@@ -710,7 +710,7 @@ Pandoc 会将以上列表转换为「紧凑列表」（在 "First", "Second" 或
 文档标题区块
 -----------
 
-（译注：本节中提到的「标题」均指 Title，而非 Headers）
+（译注：本节中提到的“标题”均指 Title，而非 Headers）
 
 **Extension: `pandoc_title_block`**
 
@@ -790,7 +790,7 @@ Pandoc 会将以上列表转换为「紧凑列表」（在 "First", "Second" 或
 
 一个反斜线之后的空格会被解释为不断行的空格 (nonbreaking space)。这在 TeX 的输出中会显示为 `~`，而在 HTML 与 XML 则是显示为 `\&#160;` 或 `\&nbsp;`。
 
-一个反斜线之后的换行字符（例如反斜线符号出现在一行的最尾端）则会被解释为强制换行。这在 TeX 的输出中会显示为 `\\`，而在 HTML 里则是 `<br />`。相对于标准 Markdown 是以在行尾加上两个空格这种「看不见」的方式进行强制换行，反斜线接换行字符会是比较好的替代方案。
+一个反斜线之后的换行字符（例如反斜线符号出现在一行的最尾端）则会被解释为强制换行。这在 TeX 的输出中会显示为 `\\`，而在 HTML 里则是 `<br />`。相对于标准 Markdown 是以在行尾加上两个空格这种“看不见”的方式进行强制换行，反斜线接换行字符会是比较好的替代方案。
 
 反斜线跳脱字符在代码上下文中不起任何作用。
 
@@ -954,7 +954,7 @@ Markdown 允许你在文档中的任何地方插入原始 HTML（或 DocBook）�
 
 **Extension: `markdown_in_html_blocks`**
 
-标准 Markdown 允许你插入 HTML「区块」：所谓的 HTML 区块是指，上下各由一个空行所隔开，开始与结尾均由所在行最左侧开始的一连串对称均衡的 HTML 标签。在这个区块中，任何内容都会当作是 HTML 来分析，而不再视为 markdown；所以（举例来说），`*` 符号就不再代表强调。
+标准 Markdown 允许你插入 HTML“区块”：所谓的 HTML 区块是指，上下各由一个空行所隔开，开始与结尾均由所在行最左侧开始的一连串对称均衡的 HTML 标签。在这个区块中，任何内容都会当作是 HTML 来分析，而不再视为 markdown；所以（举例来说），`*` 符号就不再代表强调。
 
 当指定格式为 `markdown_strict` 时，Pandoc 会以上述方式处理；但缺省情况下，Pandoc 能够以 markdown 语法解读 HTML 区块标签中的内容。举例说明，Pandoc 能够将底下这段
 
@@ -1072,7 +1072,7 @@ Markdown 接受以下数种指定链接的方式。
 
     [my website]: http://foo.bar.baz
 
-注意：在 `Markdown.pl` 以及大多数其他 markdown 实作中，指向链接的定义不能存在于嵌套结构中，例如列表项目或是区块引用。Pandoc lifts this arbitrary seeming restriction。所以虽然下面的语法在几乎所有其他实作中都是错误的，但在 pandoc 中可以正确处理：
+注意：在 `Markdown.pl` 以及大多数其他 markdown 实现中，指向链接的定义不能存在于嵌套结构中，例如列表项目或是区块引用。Pandoc lifts this arbitrary seeming restriction。所以虽然下面的语法在几乎所有其他实现中都是错误的，但在 pandoc 中可以正确处理：
 
     > My block [quote].
     >
@@ -1182,7 +1182,7 @@ Pandoc 能够以数种形式自动产生引用与参考书目（使用 Andrea Ro
 
 你需要使用命令行选项 `--bibliography` 来指定参考书目文件（如果有多个书目档就得反复指定）。
 
-缺省情况下，pandoc 会在引用文献与参考书目中使用芝加哥「作者－日期」格式。要使用其他的格式，你需要用 `--csl` 选项来指定一个 [CSL] 1.0 格式的文件。关于创建与修改 CSL 格式的入门可以在 <http://citationstyles.org/downloads/primer.html> 这边找到。<https://github.com/citation-style-language/styles> 是 CSL 格式的文件库。也可以在 <http://zotero.org/styles> 以简单的方式浏览。
+缺省情况下，pandoc 会在引用文献与参考书目中使用芝加哥“作者－日期”格式。要使用其他的格式，你需要用 `--csl` 选项来指定一个 [CSL] 1.0 格式的文件。关于创建与修改 CSL 格式的入门可以在 <http://citationstyles.org/downloads/primer.html> 这边找到。<https://github.com/citation-style-language/styles> 是 CSL 格式的文件库。也可以在 <http://zotero.org/styles> 以简单的方式浏览。
 
 [CSL]: http://CitationStyles.org
 
