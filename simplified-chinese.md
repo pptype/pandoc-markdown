@@ -885,7 +885,7 @@ Pandoc 会将以上列表转换为“紧凑列表”（在 “一”“二”或
     这一段文字是 _emphasized with underscore_（_用下划线强调_）， 而这
     一段是 *emphasized with asterisks*（*用星号强调*）。
 
-[^T2]: 译注：第一级强调，即使用 `*` 或 `_` 产生斜体效果，需要字体支持斜体。中文字体一般不支持斜体，如果你使用的中文字体支持斜体，括号内的“强调”会是倾斜的。
+[^T2]: 译注：第一级强调，即使用 `*` 或 `_` 产生斜体效果，需要字体支持斜体。中文字体一般不支持斜体，所以在中文中使用单个 `*` 或 `_` 将不起作用。
 
 重复两个 `*` 或 `_` 符号以产生 **更强烈的强调**：
 
@@ -1112,76 +1112,88 @@ LaTeX 宏
 链接
 -----
 
-Markdown 接受以下数种指定链接的方式。
+Markdown 允许以如下方式指定链接。
 
 ### 自动链接 ###
 
-如果你用角括号将一段 URL 或是 email 地址包起来，它会自动转换成链接：
+如果你用尖括号将一段 URL 或是 email 地址包起来，它会自动转换成链接：
 
     <http://google.com>
     <sam@green.eggs.ham>
 
 ### 行内链接 ###
 
-一个行内链接包含了位于方括号中的链接文本，以及方括号后以圆括号包起来的 URL。（你可以选择性地在 URL 后面加入链接标题，标题文本要放在引号之中。）
+一个行内链接包含位于方括号中的链接文本和方括号后以圆括号包起来的 URL。（你可以选择性地在 URL 后面加入链接标题，标题文本要放在引号之中。）
 
     This is an [inline link](/url), and here's [one with
     a title](http://fsf.org "click here for a good time!").
 
-方括号与圆括号之间不能有空格。链接文本可以包含格式（例如强调），但链接标题则否。
+方括号与圆括号之间不能有空格。链接文本可以包含格式（例如强调），但链接标题不行。
 
+行内链接中的 email 地址不会自动识别为链接，所以必须在地址前加上 `mailto`：
+
+    [Write me!](mailto:sam@green.eggs.ham)
 
 ### 指向链接 ###
 
-一个 **明确** 的指向链接包含两个部分，链接本身以及链接定义，其中链接定义可以放在文档的任何地方（不论是放在链接所在处之前或之后）。
+一个 *explicit* (明确）的指向链接包含两个部分，链接本身以及链接定义，其中链接定义可以放在文档的任何地方（不论是放在链接文本之前或之后）。
 
-链接本身是由两组方括号所组成，第一组方括号中为链接文本，第二组为链接标签。（在两个方括号间可以有空格。）链接定义则是以方括号框住的链接标签作开头，后面跟着一个冒号一个空格，再接着一个 URL，最后可以选择性地（在一个空格之后）加入由引号或是圆括号包住的链接标题。
+链接本身是由两对方括号所组成，第一对方括号中为链接文本，第二对中为链接标签。（在两d对方括号之间可以有空格。）链接定义则是以方括号框住的链接标签作开头，后面跟着一个冒号和一个空格，然后接着一个 URL，最后可以选择性地（在一个空格之后）加入由引号或是圆括号包住的链接标题。链接标签中不允许出现可解读为引用 (citation) 的文本（假设启用了 `citations` 扩展）：在解析时引用的优先级高于链接标签。
 
 以下是一些范例：
 
-    [my label 1]: /foo/bar.html  "My title, optional"
-    [my label 2]: /foo
-    [my label 3]: http://fsf.org (The free software foundation)
-    [my label 4]: /bar#special  'A title in single quotes'
+    [我的链接标签一]: /foo/bar.html  "我的标题，可选"
+    [我的链接标签二]: /foo
+    [我的链接标签三]: http://fsf.org (自由软件协会)
+    [我的链接标签四]: /bar#special  '单引号中的标题'
 
-链接的 URL 也可以选择性地以角括号包住：
 
-    [my label 5]: <http://foo.bar.baz>
+链接的 URL 也可以选择性地以尖括号包住：
+
+    [我的链接标签五]: <http://foo.bar.baz>
 
 链接标题可以放在第二行：
 
-    [my label 3]: http://fsf.org
-      "The free software foundation"
+    [我的链接标签三]: http://fsf.org
+      "自由软件协会"
 
 需注意链接标签并不区分大小写。所以下面的例子会创建合法的链接：
 
-    Here is [my link][FOO]
+    这是 [我的链接][FOO]
 
     [Foo]: /bar/baz
 
-在一个 **隐性** 指向链接中，第二组方括号的内容是空的，甚至可以完全地略去：
+在一个 *implicit* (隐性) 的指向链接中，第二组方括号的内容是空的：
 
-    See [my website][], or [my website].
+    参见[我的网站][]。
 
-    [my website]: http://foo.bar.baz
+    [我的网站]: http://foo.bar.baz
 
-注意：在 `Markdown.pl` 以及大多数其他 markdown 实现中，指向链接的定义不能存在于嵌套结构中，例如列表项目或是区块引用。Pandoc lifts this arbitrary seeming restriction。所以虽然下面的语法在几乎所有其他实现中都是错误的，但在 pandoc 中可以正确处理：
+注意：在 `Markdown.pl` 以及大多数其他 Markdown 实现中，指向链接的定义不能存在于嵌套结构中，例如列表项目或是区块引用。Pandoc 解除了这个看起来很武断的限制。所以下面的语法在几乎所有其他实现中都无效，但在 pandoc 中可以正确处理：
 
-    > My block [quote].
+    > 我的区块[引用]。
     >
-    > [quote]: /foo
+    > [引用]: /foo
 
-### 内部链接
+**Extension: `shortcut_reference_links`**
 
-要链接到同一份文档的其他章节，可使用自动产生的 ID（参见 [HTML, LaTeX 与 ConTeXt 的标题识别符] 一节后半）。例如：
+在一个 *shorcut* (简略)的指向链接中，第二对反括号甚至可以全部省略：
 
-    See the [Introduction](#introduction).
+    参见[我的网站]。
+
+    [我的网站]: http://foo.bar.baz
+
+### 内部链接 ###
+
+要链接到同一份文档的其他章节，可使用自动产生的 ID 标识符（参见 [标题标识符] 一节后半部分）。例如：
+
+    参见[介绍](#介绍)。
 
 或是
 
-    See the [Introduction].
+    参见[介绍]。
 
-    [Introduction]: #introduction
+    [介绍]: #介绍
 
 内部链接目前支持的格式有 HTML（包括 HTML slide shows 与 EPUB）、LaTeX 以及 ConTeXt。
 
