@@ -961,63 +961,75 @@ Pandoc 会将以上列表转换为“紧凑列表”（在 “一”“二”或
 
 **Extension: `tex_math_dollars`**
 
-所有介于两个 `$` 字符之间的内容将会被视为 TeX 数学公式处理。开头的 `$` 右侧必须立刻接上任意文本，而结尾 `$` 的左侧同样也必须紧挨着文本。这样一来，`$20,000 and $30,000` 就不会被当作数学公式处理了。如果基于某些原因，有必须使用 `$` 符号将其他文本括住的需求时，那么可以在 `$` 前使用反斜线转义字符，这样 `$` 就不会被当作数学公式的分隔符。
+所有介于两个 `$` 字符之间的内容将会被视为 TeX 数学公式处理。开头的 `$` 右侧必须紧跟任意非空格字符，而结尾 `$` 的左侧同样也必须紧挨着非空格字符，并且结尾 `$` 的右侧不能紧跟着数字。这样一来，`$20,000 and $30,000` 这样一段话就不会被当作数学公式处理了。如果基于某些原因，必须使用字面的 `$` 符号包围其他文本时，那么可以在 `$` 前加上反斜线进行转义，这样 `$` 就不会被当作数学公式的分隔符。
 
-TeX 数学公式会在所有输出格式中印出。至于会以什么方式演算编排 (render) 则取决于输出的格式：
+TeX 数学公式会打印到所有输出格式中。至于会以什么方式编排呈现 (render)， 则取决于输出格式：
 
-Markdown, LaTeX, Org-Mode, ConTeXt
+**Markdown, LaTeX, Emacs Org Mode, ConTeXt, ZimWiki**
+
   ~ 公式会以字面文本呈现在两个 `$` 符号之间。
 
-reStructuredText
-  ~ 公式会使用 [此处](http://www.american.edu/econ/itex2mml/mathhack.rst) 所描述的 `:math:` 这个 "interpreted text role" 来进行演算编排。
+**reStructuredText**
 
-AsciiDoc
-  ~ 公式会以 `latexmath:[...]` 演算编排。
+  ~ 公式会使用 [此处](http://docutils.sourceforge.net/docs/ref/rst/roles.html#math) 所描述的 `:math:` 这个“被解读文本角色” (interpreted text role) 来编排呈现。
 
-Texinfo
-  ~ 公式会在 `@math` 指令中演算编排。
+**AsciiDoc**
 
-groff man
-  ~ 公式会以去掉 `$` 后的字面文本演算编排。
+  ~ 公式会以 `latexmath:[...]` 格式编排呈现。
 
-MediaWiki
-  ~ 公式会在 `<math>` 标签中演算编排。
+**Texinfo**
 
-Textile
-  ~ 公式会在 `<span class="math">` 标签中演算编排。
+  ~ 公式会在 `@math` 指令中编排呈现。
 
-RTF, OpenDocument, ODT
-  ~ 如果可以的话，公式会以 unicode 字符演算编排，不然就直接使用字面字符。
+**groff man**
 
-Docbook
-  ~ 如果使用了 `--mathml` 旗标，公式就会在 `inlineequation` 或 `informalequation` 标签中使用 mathml 演算编排。否则就会尽可能使用 unicode 字符演算编排。
+  ~ 公式会去掉 `$` 后，直接以字面文本编排呈现。
 
-Docx
-  ~ 公式会以 OMML 数学标记的方式演算编排。
+**MediaWiki, DokuWiki**
 
-FictionBook2
-  ~ 如果有使用 `--webtex` 选项，公式会以 Google Charts 或其他兼容的网络服务演算编排为图片，并下载嵌入于电子书中。否则就会以字面文本显示。
+  ~ 公式会在 `<math>` 标签中编排呈现。
 
-HTML, Slidy, DZSlides, S5, EPUB
-  ~ 公式会依照以下命令行选项的设置，以不同的方法演算编排为 HTML 代码。
+**Textile**
 
-    1.  默认方式是将 TeX 数学公式尽可能地以 unicode 字符演算编排，如同 RTF、DocBook 以及 OpenDocument 的输出。公式会被放在附有属性 `class="math"` 的 `span` 标签内，所以可以在需要时给予不同的样式，使其突出于周遭的文本内容。
+  ~ 公式会在 `<span class="math">` 标签中编排呈现。
 
-    2.  如果使用了 `--latexmathml` 选项，TeX 数学公式会被显示于 `$` 或 `$$` 字符中，并放在附带 `LaTeX` 类别的 `<span>` 标签里。这段内容会用 [LaTeXMathML] script 演算编排为数学公式。（这个方法无法适用于所有浏览器，但在 Firefox 中是有效的。在不支持 LaTeXMathML 的浏览器中，TeX 数学公式会单纯的以两个 `$` 字符间的字面文本呈现。）
+**RTF, OpenDocument, ODT**
 
-    3.  如果使用了 `--jsmath` 选项，TeX数学公式会放在 `<span>` 标签（用于行内数学公式）或 `<div>` 标签（用于区块数学公式）中，并附带类别属性 `math`。这段内容会使用 [jsMath] script 来演算编排。
+  ~ 如果可以的话，公式会以 Unicode 字符编排呈现，不然就直接使用字面字符。
 
-    4.  如果使用了 `--mimetex` 选项，[mimeTeX] CGI script 会被调用来产生每个 TeX 数学公式的图片。这适用于所有浏览器。`--mimetex` 选项有一个可选的 URL 参数。如果没有指定 URL，它会假设 mimeTeX CGI script 的位置在 `/cgi-bin/mimetex.cig`。
+**Docbook**
 
-    5.  如果使用了 `--gladtex` 选项，TeX 数学公式在 HTML 的输出中会被 `<eq>` 标签包住。产生的 `htex` 文件之后可以通过 [gladTeX] 处理，这会针对每个数学公式生成图片，并于最后生成一个包含这些图片链接的 `html` 文件。所以，整个处理流程如下：
+  ~ 如果使用了 `--mathml` 选项，公式就会在 `inlineequation` 或 `informalequation` 标签中，使用 MathML 进行编排呈现。否则，如果可能的话，会使用 Unicode 字符编排呈现。
+
+**Docx**
+
+  ~ 公式会以 OMML 数学标记的方式编排呈现。
+
+**FictionBook2**
+
+  ~ 如果使用了 `--webtex` 选项，会使用 CodeCogs 或其他可用的网络服务，将公式渲染为图片，下载后嵌入电子书中。否则就会以字面文本显示。
+
+**HTML, Slidy, DZSlides, S5, EPUB**
+
+  ~ 公式在 HTML 中的编排呈现方式，会依照命令行选项进行设置：
+
+    1.  默认方式是将 TeX 数学公式尽可能地以 Unicode 字符编排呈现，如同 RTF、DocBook 以及 OpenDocument 的输出。公式会被放在附有属性 `class="math"` 的 `span` 标签内，所以可以在需要时设定不同的样式，使其与周围文本内容有所不同。
+
+    2.  如果使用了 `--latexmathml` 选项，TeX 数学公式会被 `$` 或 `$$` 字符括住，并放在附带 `LaTeX` 类的 `<span>` 标签里。这段内容会被 [LaTeXMathML] 脚本编排为数学公式。（这个方法无法适用于所有浏览器，但在 Firefox 中是有效的。在不支持 LaTeXMathML 的浏览器中，TeX 数学公式在两个 `$` 字符中间，以字面文本呈现。）
+
+    3.  如果使用了 `--jsmath` 选项，TeX 数学公式会放在 `<span>` 标签（用于行内数学公式）或 `<div>` 标签（用于区块数学公式）中，并附带类别属性 `math`。这段内容会使用 [jsMath] 脚本来进行编排呈现。
+
+    4.  如果使用了 `--mimetex` 选项，[mimeTeX] CGI 脚本会被调用，用来生成每个 TeX 数学公式的图片。这适用于所有浏览器。`--mimetex` 选项有一个可选的 URL 参数。如果没有指定 URL，它会假设 mimeTeX CGI 位于 `/cgi-bin/mimetex.cgi`。
+
+    5.  如果使用了 `--gladtex` 选项，TeX 数学公式在 HTML 的输出中会被 `<eq>` 标签包住。产生的 `htex` 文件可以使用 [gladTeX] 处理，这会为每个数学公式生成一个图片，并在生成的 HTML 文件中包含这些图片的链接。所以，整个处理流程如下：
 
             pandoc -s --gladtex myfile.txt -o myfile.htex
             gladtex -d myfile-images myfile.htex
-            # produces myfile.html and images in myfile-images
+            # 生成 myfile.html 文件和 myfile-images 文件夹，里面包含公式图片
 
-    6.  如果使用了 `--webtex` 选项，TeX 数学公式会被转换为 `<img>` 标签并链接到一个用以转换公式为图片的外部 script。公式将会编码为 URL 可接受格式并且与指定的 URL 参数串接。如果没有指定 URL，那么将会使用 Google Chart API (`http://chart.apis.google.com/chart?cht=tx&chl=`)。
+    6.  如果使用了 `--webtex` 选项，TeX 数学公式会被转换为 `<img>` 标签，并链接到一个用以转换公式为图片的外部脚本。公式将被编码为 URL 可接受的字符串，并添加到指定的 URL 后面。如果没有指定 URL，那么将会使用 CodeCogs (`https://latex.codecogs.com/png.latex?`)。
 
-    7.  如果使用了 `--mathjax` 选项，TeX 数学公式将会被包在 `\(...\)`（用于行内数学公式）或 `\[...\]`（用于区块数学公式）之间显示，并且放在附带类别 `math` 的 `<span>` 标签之中。这段内容会使用 [MathJax] script 演算编排为页面上的数学公式。
+    7.  如果使用了 `--mathjax` 选项，TeX 数学公式将会被包在 `\(...\)`（用于行内数学公式）中，或者 `\[...\]`（用于区块数学公式）中，并且放在附带 `math` 类的 `<span>` 标签之中。[MathJax] 脚本会将它们编排为页面上的数学公式。
 
 [LaTeXMathML]: http://math.etsu.edu/LaTeXMathML/
 [jsMath]:  http://www.math.union.edu/~dpvc/jsmath/
@@ -1025,20 +1037,20 @@ HTML, Slidy, DZSlides, S5, EPUB
 [gladTeX]:  http://ans.hsh.no/home/mgg/gladtex/
 [MathJax]: http://www.mathjax.org/
 
-Raw HTML
+原始 HTML
 --------
 
 **Extension: `raw_html`**
 
-Markdown 允许你在文档中的任何地方插入原始 HTML（或 DocBook）指令（除了在字面文本上下文处，此时的 `<`, `>` 和 `&` 都会按其字面意义显示）。（技术上而言这不算扩展功能，因为标准 Markdown 本身就有提供此功能，但做成扩展形式便可以在有特殊需要的时候关闭此功能。）
+Markdown 允许你在文档中的任何地方插入原始 HTML（或 DocBook）内容（字面文本上下文除外，因为 `<`, `>` 和 `&` 都会按其字面意义解读）。（技术上而言这不算扩展功能，因为标准 Markdown 本身就提供此功能，但做成扩展形式便可以在有特殊需要时关闭此功能。）
 
-输出 HTML, S5, Slidy, Slideous, DZSlides, EPUB, Markdown 以及 Textile 等格式时，原始 HTML 代码会不作修改地保留至输出文件中；而其他格式的输出内容则会将原始 HTML 代码去除掉。
+在输出至 HTML, S5, Slidy, Slideous, DZSlides, EPUB, Markdown, Emacs Org Mode 以及 Textile 格式时，原始 HTML 代码会不作修改地保留，而在其他输出格式中，原始 HTML 代码被去掉。
 
 **Extension: `markdown_in_html_blocks`**
 
-标准 Markdown 允许你插入 HTML“区块”：所谓的 HTML 区块是指，上下各由一个空行所隔开，开始与结尾均由所在行最左侧开始的一连串对称均衡的 HTML 标签。在这个区块中，任何内容都会当作是 HTML 来分析，而不再视为 markdown；所以（举例来说），`*` 符号就不再代表强调。
+标准 Markdown 允许你插入 HTML“区块”：所谓的 HTML 区块是指，上下各由一个空行所隔开，开始与结尾的行都以 HTML 标签开始，并且前后标签对称，形成封闭区块。在这个区块中，任何内容都会当作是 HTML 来解析，而不再视为 Markdown；所以（举例来说），`*` 符号就不再代表强调。
 
-当指定格式为 `markdown_strict` 时，Pandoc 会以上述方式处理；但默认情况下，Pandoc 能够以 markdown 语法解读 HTML 区块标签中的内容。举例说明，Pandoc 能够将底下这段
+当指定格式为 `markdown_strict` 时，Pandoc 会以上述方式处理；但默认情况下，pandoc h会以 Markdown 语法解读 HTML 标签区块中的内容。比如 pandoc 会将底下这段
 
     <table>
     	<tr>
@@ -1056,13 +1068,13 @@ Markdown 允许你在文档中的任何地方插入原始 HTML（或 DocBook）�
     	</tr>
     </table>
 
-而 `Markdown.pl` 则是保留该段原样。
+而 `Markdown.pl` 则保留原样。
 
-这个规则只有一个例外：那就是介于 `<script>` 与 `<style>` 之间的文本都不会被拿来当作 markdown 解读。
+这个规则只有一个例外：那就是介于 `<script>` 与 `<style>` 标签之间的文本都不会被当作 Markdown 解读。
 
-这边与标准 Markdown 的分歧，主要是为了让 markdown 能够更便利地混入 HTML 区块元素。比方说，一段 markdown 文本可以用 `<div>` 标签将其前后包住来进行样式指定，而不用担心里面的 markdown 不会被解译到。
+这种与标准 Markdown 的分歧，会让 Markdown 与 HTML 区块元素的混合变得更加容易。比方说，一段 Markdown 文本可以用 `<div>` 标签将其前后包住，而里面的文本仍然会以 Markdown 方式解读。
 
-Raw TeX
+原始 TeX
 -------
 
 **Extension: `raw_tex`**
