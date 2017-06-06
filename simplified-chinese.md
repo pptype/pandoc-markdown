@@ -1079,9 +1079,9 @@ Markdown 允许你在文档中的任何地方插入原始 HTML（或 DocBook）�
 
 **Extension: `raw_tex`**
 
-除了 HTML 之外，pandoc 也接受文档中嵌入原始 LaTeX, TeX 以及 ConTeXt 代码。行内 TeX 指令会被保留并不作修改地输出至 LaTeX 与 ConTeXt 格式中。所以，举例来说，你可以使用 LaTeX 来导入 BibTeX 的引用文献：
+除了 HTML 之外，pandoc 也接受文档中嵌入原始 LaTeX, TeX 以及 ConTeXt 代码。行内 TeX 指令会按原样输出至 LaTeX 与 ConTeXt 格式中。所以，举例来说，你可以使用 LaTeX 来插入 BibTeX 的引用文献：
 
-    This result was proved in \cite{jones.1967}.
+    这个结果在文献 \cite{jones.1967} 中有过证明。
 
 请注意在 LaTeX 环境下时，像是底下
 
@@ -1092,23 +1092,22 @@ Markdown 允许你在文档中的任何地方插入原始 HTML（或 DocBook）�
     36--45  & 22 \\ \hline
     \end{tabular}
 
-位在 `begin` 与 `end` 标签之间的内容，都会被当作是原始 LaTeX 数据解读，而不会视为 markdown。
+位于 `begin` 与 `end` 标签之间的内容，都会被当作是原始 LaTeX 文本解读，而不会被视为 Markdown。
 
-行内 LaTeX 在输出至 Markdown, LaTeX 及 ConTeXt 之外的格式时会被忽略掉。
+除了输出至 Markdown，LaTeX，Emacs Org Mode 及 ConTeXt 四种格式，其他格式中，行内 LaTeX 会被忽略。
 
 LaTeX 宏
 ------------
 
 **Extension: `latex_macros`**
 
-当输出格式不是 LaTeX 时，pandoc 会分析 LaTeX 的 `\newcommand` 和 `\renewcommand` 定义，并套用其产生的宏到所有 LaTeX 数学公式中。所以，举例来说，下列指令对于所有的输出格式均有作用，而非仅仅作用于 LaTeX 格式：
+当输出格式不是 LaTeX 时，pandoc 会分析 LaTeX 的 `\newcommand` 和 `\renewcommand` 定义，并将其产生的宏应用到所有 LaTeX 数学公式中。所以举例来说，下列指令对所有的输出格式均有作用，而不仅是 LaTeX ：
 
     \newcommand{\tuple}[1]{\langle #1 \rangle}
 
     $\tuple{a, b, c}$
 
-在 LaTeX 的输出中，`\newcommand` 定义会单纯不作修改地保留至输出结果。
-
+而输出格式是 LaTeX 时，`\newcommand` 定义会按原样保留。
 
 链接
 -----
@@ -1124,7 +1123,7 @@ Markdown 接受以下数种指定链接的方式。
 
 ### 行内链接 ###
 
-一个行内链接包含了位在方括号中的链接文本，以及方括号后以圆括号包起来的 URL。（你可以选择性地在 URL 后面加入链接标题，标题文本要放在引号之中。）
+一个行内链接包含了位于方括号中的链接文本，以及方括号后以圆括号包起来的 URL。（你可以选择性地在 URL 后面加入链接标题，标题文本要放在引号之中。）
 
     This is an [inline link](/url), and here's [one with
     a title](http://fsf.org "click here for a good time!").
