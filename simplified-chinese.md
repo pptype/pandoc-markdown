@@ -1044,13 +1044,13 @@ TeX 数学公式会打印到所有输出格式中。至于会以什么方式编�
 
 Markdown 允许你在文档中的任何地方插入原始 HTML（或 DocBook）内容（字面文本上下文除外，因为 `<`, `>` 和 `&` 都会按其字面意义解读）。（技术上而言这不算扩展功能，因为标准 Markdown 本身就提供此功能，但做成扩展形式便可以在有特殊需要时关闭此功能。）
 
-在输出至 HTML, S5, Slidy, Slideous, DZSlides, EPUB, Markdown, Emacs Org Mode 以及 Textile 格式时，原始 HTML 代码会不作修改地保留，而在其他输出格式中，原始 HTML 代码被去掉。
+在输出至 HTML, S5, Slidy, Slideous, DZSlides, EPUB, Markdown, Emacs Org Mode 以及 Textile 格式时，原始 HTML 代码会不作修改地保留，而在其他输出格式中，原始 HTML 代码会被去掉。
 
 **Extension: `markdown_in_html_blocks`**
 
 标准 Markdown 允许你插入 HTML“区块”：所谓的 HTML 区块是指，上下各由一个空行所隔开，开始与结尾的行都以 HTML 标签开始，并且前后标签对称，形成封闭区块。在这个区块中，任何内容都会当作是 HTML 来解析，而不再视为 Markdown；所以（举例来说），`*` 符号就不再代表强调。
 
-当指定格式为 `markdown_strict` 时，Pandoc 会以上述方式处理；但默认情况下，pandoc h会以 Markdown 语法解读 HTML 标签区块中的内容。比如 pandoc 会将底下这段
+当指定格式为 `markdown_strict` 时，pandoc 会以上述方式处理；但默认情况下，pandoc 会以 Markdown 语法解读 HTML 标签区块中的内容。比如 pandoc 会将底下这段
 
     <table>
     	<tr>
@@ -1072,7 +1072,7 @@ Markdown 允许你在文档中的任何地方插入原始 HTML（或 DocBook）�
 
 这个规则只有一个例外：那就是介于 `<script>` 与 `<style>` 标签之间的文本都不会被当作 Markdown 解读。
 
-这种与标准 Markdown 的分歧，会让 Markdown 与 HTML 区块元素的混合变得更加容易。比方说，一段 Markdown 文本可以用 `<div>` 标签将其前后包住，而里面的文本仍然会以 Markdown 方式解读。
+这种与标准 Markdown 的差别，会让 Markdown 与 HTML 区块元素的混合变得更加容易。比方说，一段 Markdown 文本可以用 `<div>` 标签将其前后包住，而里面的文本仍然会以 Markdown 方式解读。
 
 原始 TeX
 -------
@@ -1125,20 +1125,19 @@ Markdown 允许以如下方式指定链接。
 
 一个行内链接包含位于方括号中的链接文本和方括号后以圆括号包起来的 URL。（你可以选择性地在 URL 后面加入链接标题，标题文本要放在引号之中。）
 
-    This is an [inline link](/url), and here's [one with
-    a title](http://fsf.org "click here for a good time!").
+    这是一个[行内链接](/url)，而这是一个[带标题的链接](http://fsf.org "点击这里以获得快乐！").
 
 方括号与圆括号之间不能有空格。链接文本可以包含格式（例如强调），但链接标题不行。
 
 行内链接中的 email 地址不会自动识别为链接，所以必须在地址前加上 `mailto`：
 
-    [Write me!](mailto:sam@green.eggs.ham)
+    [给我发邮件！](mailto:sam@green.eggs.ham)
 
 ### 指向链接 ###
 
 一个 *explicit* (明确）的指向链接包含两个部分，链接本身以及链接定义，其中链接定义可以放在文档的任何地方（不论是放在链接文本之前或之后）。
 
-链接本身是由两对方括号所组成，第一对方括号中为链接文本，第二对中为链接标签。（在两d对方括号之间可以有空格。）链接定义则是以方括号框住的链接标签作开头，后面跟着一个冒号和一个空格，然后接着一个 URL，最后可以选择性地（在一个空格之后）加入由引号或是圆括号包住的链接标题。链接标签中不允许出现可解读为引用 (citation) 的文本（假设启用了 `citations` 扩展）：在解析时引用的优先级高于链接标签。
+链接本身是由两对方括号所组成，第一对方括号中为链接文本，第二对中为链接标签。（在两对方括号之间可以有空格。）链接定义则是以方括号框住的链接标签作开头，后面跟着一个冒号和一个空格，然后接着一个 URL，最后可以选择性地（在一个空格之后）加入由引号或是圆括号包住的链接标题。链接标签中不允许出现可解读为引用 (citation) 的文本（假设启用了 `citations` 扩展）：在解析时引用的优先级高于链接标签。
 
 以下是一些范例：
 
@@ -1177,7 +1176,7 @@ Markdown 允许以如下方式指定链接。
 
 **Extension: `shortcut_reference_links`**
 
-在一个 *shorcut* (简略)的指向链接中，第二对反括号甚至可以全部省略：
+在一个 *shorcut* (简略)的指向链接中，第二对方括号甚至可以全部省略：
 
     参见[我的网站]。
 
@@ -1200,28 +1199,50 @@ Markdown 允许以如下方式指定链接。
 图片
 ------
 
-在链接语法的前面加上一个 `!` 就是图片的语法了。链接文本将会作为图片的替代文本（alt text）：
+在链接语法的前面加上一个 `!` 就是图片的语法了。链接文本将会作为图片的 alt 文本：
 
-    ![la lune](lalune.jpg "Voyage to the moon")
+    ![la lune](lalune.jpg "登月之旅")
 
-    ![movie reel]
+    ![电影胶卷]
 
-    [movie reel]: movie.gif
-
-### 附上说明的图片 ###
+    [电影胶卷]: movie.gif
 
 **Extension: `implicit_figures`**
 
-一个图片若自身单独存在一个段落中，那么将会以附上图片说明 (caption) 的图表 (figure) 形式呈现。[^5]（在 LaTeX 中，会使用图表环境；在 HTML 中，图片会被放在具有 `figure` 类别的 `div` 元素中，并会附上一个具有 `caption` 类别的 `p` 元素。）图片的替代文本同时也会用来作为图片说明。
+一个图片若自身单独存在一个段落中，那么将会以附图片说明 (caption) 的图表 (figure) 呈现。[^5]（在 LaTeX 中，会使用图表环境 (figure environment)；在 HTML 中，图片会被放在具有 `figure` 类的 `div` 元素中，并会附上一个具有 `caption` 类的 `p` 元素。）图片的 alt 文本同时也会用来作为图片说明。
 
-    ![This is the caption](/url/of/image.png)
+    ![这是图片说明](/url/of/image.png)
 
-[^5]: 这项功能尚未在 RTF, OpenDocument 或 ODT 格式上实现。在这些格式中，你会得到一个在段落中只包含自己的图片，而无图片说明。
+[^5]: 这项功能尚未在 RTF, OpenDocument 或 ODT 格式上实现。在这些格式中，你会得到一个段落，只包含图片，而没有图片说明。
 
-如果你只是想要个一般的行内图片，那么只要让图片不是段落里唯一的元素即可。一个简单的方法是在图片后面插入一个不断行空格：
+如果你只想要个普通的行内图片，那么只需要保证图片不是段落里唯一的元素即可。一个简单的方法是在图片后面插入一个不断行空格：
 
-    ![This image won't be a figure](/url/of/image.png)\
+    ![这张图片不会成为一个图表](/url/of/image.png)\ 
 
+**Extension: `link_attributes`**
+
+链接和图片都可以设置属性：
+
+    一张行内 ![图片](foo.jpg){#id .class width=30 height=20px}
+    和一张带有属性的 ![指向][ref] 图片.
+
+    [ref]: foo.jpg "可选的标题" {#id .class key=val key2="val 2"}
+
+（当只用 `#id` 和 `.class` 时，此语法与 [PHP Markdown Extra] 兼容。）
+
+对于 HTML 和 EPUB 来说，除了 `width` 和 `height`，所有属性（包括 `scrset` 和 `sizes`）都会按原样输出。而输出到其他格式时，输出格式不支持的属性将被忽略。
+
+`width` 和 `height` 属性会被特别处理。当这两个属性的值不带单位时，pandoc 假设单位是像素 (pixels)。但是这些单位都可以使用：`px`, `cm`, `mm`, `in`, `inch` 和 `%`。数字和单位之间，不能有任何空格。例如：
+
+    ![](file.jpg){ width=50% }
+
+- 在以纸张页面为基础的格式中，比如 LaTeX，宽度和高度会转化为英寸。HTML 形式的输出格式中，它们会转化为像素。可以使用 `--dpi` 选项来指定每英寸的像素数，默认值是 96dpi。
+
+- 通常`%` 单位是相对某些可供利用的空间来说的，比如上面的例子会被转化成 `<img href="file.jpg" style="width: 50%;" />` (HTML)，`\includegraphics[width=0.5\textwidth]{file.jpg}` (LaTeX)，或者 `\externalfigure[file.jpg][width=0.5\textwidth]` (ConTeXt)。
+
+- 输出格式中，有些有“类”(class) 的概念 (ConTeXt)，有些有 ID (identifier) 的概念，有些两种都有 (HTML)。
+
+- 当没有指定 `width` 和 `height` 属性时，折中的办法是读取图片的分辨率和嵌在图片文件中的 dpi 元数据。
 
 脚注
 ---------
