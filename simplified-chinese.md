@@ -19,7 +19,9 @@
 Pandoc's Markdown
 =================
 
-与 John Gruber 的 原始 [Markdown] 相比，Pandoc 版本的 Markdown 在语法上进行了扩展和少许修正。本文档解释了这些语法，并指出其与标准 Markdown 的差异。除非特别提到，这些差异均可借由使用 `markdown_strict` 而非 `markdown` 的格式来消除。一项扩展可通过 `+EXTENSION` 或 `-EXTENSION` 的方式来开启或关闭。例如，`markdown_strict+footnotes` 表示加上脚注扩展的严格 Markdown，而 `markdown-footnotes-pipe_tables` 则是去掉了脚注与管线表格扩展的 pandoc Markdown。
+与 John Gruber 的 原始 [Markdown][Markdown] 相比，Pandoc 版本的 Markdown 在语法上进行了扩展和少许修正。本文档解释了这些语法，并指出其与标准 Markdown 的差异。除非特别提到，这些差异均可借由使用 `markdown_strict` 而非 `markdown` 的格式来消除。一项扩展可通过 `+EXTENSION` 或 `-EXTENSION` 的方式来开启或关闭。例如，`markdown_strict+footnotes` 表示加上脚注扩展的严格 Markdown，而 `markdown-footnotes-pipe_tables` 则是去掉了脚注与管线表格扩展的 pandoc Markdown。
+
+[Markdown]: https://daringfireball.net/projects/markdown/
 
 哲学
 ----------
@@ -311,6 +313,8 @@ Markdown 使用 email 的习惯来创建引用区块。一个引用区块可以�
     | Berkeley, CA 94718
 
 这是从 [reStructuredText] 借来的语法。
+
+[reStructuredText]: http://docutils.sourceforge.net/docs/ref/rst/introduction.html
 
 列表
 -----
@@ -1244,102 +1248,194 @@ Markdown 允许以如下方式指定链接。
 
 - 当没有指定 `width` 和 `height` 属性时，折中的办法是读取图片的分辨率和嵌在图片文件中的 dpi 元数据。
 
+Spans
+-----
+
+**Extension: `bracketed_spans`**
+
+由方括号包住的一串字符，通常是用来创建一个链接，但如果它紧跟着属性的定义，那么它会被处理成带有属性的 span 元素。
+
+    [这是 *some text*]{.class key="val"}
+
 脚注
 ---------
 
 **Extension: `footnotes`**
 
-Pandoc's markdown 支持脚注功能，使用以下的语法：
+Pandoc's Markdown 支持脚注功能，使用以下的语法：
 
-    Here is a footnote reference,[^1] and another.[^longnote]
+    这是一个脚注链接，[^1] 然后另一个。[^longnote]
 
-    [^1]: Here is the footnote.
+    [^1]: 这是一段脚注。
 
-    [^longnote]: Here's one with multiple blocks.
+    [^longnote]: 这是一段包含多个区块的脚注。
 
-        Subsequent paragraphs are indented to show that they
-    belong to the previous footnote.
+        后面接续的段落必须缩进，以表明它属于
+    前面的脚注。
 
-            { some.code }
+            { 一些代码 code }
 
-        The whole paragraph can be indented, or just the first
-        line.  In this way, multi-paragraph footnotes work like
-        multi-paragraph list items.
+        整段都可以缩进，也可以只缩进段落的第一
+        行。这样多段落脚注的用法，就和多段落的列表项
+        目一样。
 
-    This paragraph won't be part of the note, because it
-    isn't indented.
+    这一段将不会成为脚注的一部分，因为它
+    没有缩进。
 
-脚注参考用的 ID 不得包含空格、tabs 或换行字符。这些 ID 只会用来创建脚注位置与脚注文本的对应关连；在输出时，脚注将会依次递增编号。
+脚注指向链接的 ID 不得包含空格、tabs 或换行符。这些 ID 只用于将脚注链接和脚注内容关联起来；在输出时，脚注将会依次递增编号。
 
-脚注本身不需要放在文档的最后面。它们可以放在文档里的任何地方，但不能被放入区块元素（列表、区块引用、表格等）之中。
+脚注本身不需要放在文档的最后面。它们可以放在文档里的任何地方，但不能被放入区块元素（列表、区块引用、表格等）之中。每一个脚注都必须使用前后的空行，将其与周围内容（包括其他脚注）隔离开。
 
 **Extension: `inline_notes`**
 
 Pandoc 也支持了行内脚注（尽管，与一般脚注不同，行内脚注不能包含多个段落）。其语法如下：
 
-    Here is an inline note.^[Inlines notes are easier to write, since
-    you don't have to pick an identifier and move down to type the
-    note.]
+    这是一个行内脚注。^[行内脚注更容易书写，因为你不需要特意选择一
+    个标识符，然后再到下面去输入脚注内容。]
 
-行内与一般脚注可以自由交错使用。
-
+行内与普通脚注可以自由混合使用。
 
 引用
 ---------
 
 **Extension: `citations`**
 
-Pandoc 能够以数种形式自动产生引用与参考书目（使用 Andrea Rossato 的 `hs-citeproc`）。为了使用这项功能，你需要一个下列其中一种格式的参考书目数据库：
+使用外部过滤器 (filter) `pandoc-citeproc`，pandoc 能够以数种样式自动生成引用与参考文献。基本的用法如下：
 
-  Format            File extension
+    pandoc --filter pandoc-citeproc myinput.txt
+
+为了使用这项功能，你需要在命令行中指定一个参考文献文件，即在 YAML 元数据区块中，使用 `bibliography` 元数据字段，或者直接在命令行中加入 `--bibliography` 参数。如果你想使用多个参考文献文件，你可以提供多个 `--bibliography` 参数，或者将 `bibliography` 设置成 YAML 数组。  可用的参考文献格式：
+
+  格式              文件扩展名
   ------------      --------------
-  MODS              .mods
   BibLaTeX          .bib
   BibTeX            .bibtex
-  RIS               .ris
+  Copac             .copac
+  CSL JSON          .json
+  CSL YAML          .yaml
   EndNote           .enl
   EndNote XML       .xml
   ISI               .wos
   MEDLINE           .medline
-  Copac             .copac
-  JSON citeproc     .json
+  MODS              .mods
+  RIS               .ris
 
-需注意的是扩展名 `.bib` 一般而言同时适用于 BibTeX 与 BibLaTeX 的文件，不过你可以使用 `.bibtex` 来强制指定 BibTeX。
+注意，扩展名 `.bib` 同时适用于 BibTeX 与 BibLaTeX 文件，不过你可以使用 `.bibtex` 来强制指定 BibTeX。
 
-你需要使用命令行选项 `--bibliography` 来指定参考书目文件（如果有多个书目档就得反复指定）。
+注意，命令 `pandoc-citeproc --bib2json` 和 `pandoc-citeproc --bib2yaml` 可以将任何其他支持的格式转换成 `.json` 和 `.yaml` 文件。
 
-默认情况下，pandoc 会在引用文献与参考书目中使用芝加哥“作者－日期”格式。要使用其他的格式，你需要用 `--csl` 选项来指定一个 [CSL] 1.0 格式的文件。关于创建与修改 CSL 格式的入门可以在 <http://citationstyles.org/downloads/primer.html> 这边找到。<https://github.com/citation-style-language/styles> 是 CSL 格式的文件库。也可以在 <http://zotero.org/styles> 以简单的方式浏览。
+各种字段内标记语言 (in-field markup)：在 BibTeX 和 BibLaTeX 数据库中，pandoc-citeproc 会解析 LaTeX 标记语言的子集；在 CSL YAML 数据库中，是 pandoc Markdown；在 CSL JSON 数据库中，是与 [HTML 近似的标记语言][HTML-like markup]：
 
-[CSL]: http://CitationStyles.org
+    <i>...</i>
+        斜体
+    <b>...</b>
+        粗体
+    <span style="font-variant:small-caps;">...</span> **or**
+    <sc>...</sc>
+        小体大写 (small capitals)
+    <sub>...</sub>
+        下标
+    <sup>...</sup>
+        上标
+    <span class="nocase">...</span>
+        阻止短语的大小写被转换成标题形式
 
-引用信息放在方括号中，以分号区隔。每一条引用都会有个 key，由 `@` 加上数据库中的引用 ID 组成，并且可以选择性地包含前缀、定位以及后缀。以下是一些范例：
+[HTML-like markup]: http://docs.citationstyles.org/en/1.0/release-notes.html#rich-text-markup-within-fields
 
-    Blah blah [see @doe99, pp. 33-35; also @smith04, ch. 1].
+`pandoc-citeproc -j` 和 `-y` 命令会尽可能完整地在 CSL JSON 和 CSL YAML 两种格式间互相转换。
 
-    Blah blah [@doe99, pp. 33-35, 38-39 and *passim*].
+除了使用 `--bibliography` 命令行选项或者 YAML 元数据中的 `bibliography` 字段来指定参考文献文件，你也可以在文档本身的 YAML 元数据区块中，将引用数据直接写在 `references` 字段后。这个字段需要包含一个 YAML 数组，并在里面对参考文献信息进行合适的编排，比如：
 
-    Blah blah [@smith04; @doe99].
+    ---
+    references:
+    - type: article-journal
+      id: WatsonCrick1953
+      author:
+      - family: Watson
+        given: J. D.
+      - family: Crick
+        given: F. H. C.
+      issued:
+        date-parts:
+        - - 1953
+          - 4
+          - 25
+      title: 'Molecular structure of nucleic acids: a structure for deoxyribose
+        nucleic acid'
+      title-short: Molecular structure of nucleic acids
+      container-title: Nature
+      volume: 171
+      issue: 4356
+      page: 737-738
+      DOI: 10.1038/171737a0
+      URL: http://www.nature.com/nature/journal/v171/n4356/abs/171737a0.html
+      language: en-GB
+    ...
 
-在 `@` 前面的减号 (`-`) 将会避免作者名字在引用中出现。这可以用在已经提及作者的文章场合中：
+（`pandoc-citeproc --bib2yaml` 命令可以从任何支持的参考文献文件格式中，生成这样的 YAML 数组。）
 
-    Smith says blah [-@smith04].
+引用和参考文献条目可以使用任何[引用样式语言][Citation Style Language]支持的样式，具体的支持列表可见 [Zotero 样式仓库][Zotero Style Repository]；可用 `--csl` 选项或者 `cls` 元数据字段来指定这些文件。默认情况下，`pandoc-citeproc` 会使用[芝加哥样式手册][Chicago Mannual Style]中的“作者－日期”格式。CSL 项目提供了更多信息，帮助你[寻找和编辑样式][finding and editing styles]。
+
+[Citation Style Language]: http://citationstyles.org
+[Zotero Style Repository]: https://www.zotero.org/styles
+[Chicago Mannual Style]: http://www.chicagomanualofstyle.org/home.html
+[finding and editing styles]: http://citationstyles.org/styles/
+
+如果需要让你的引用超链接到相应的参考文献条目，在你的 YAML 元数据中加上 `link-citations: true`。
+
+引用信息放在方括号中，以分号隔开。每一条引用都会有个索引键 (key)，由 `@` 加上数据库中的引用 ID 组成，并且可以选择性地包含前缀、页码或章节定位符以及后缀。引用的索引键必须以字母，数字，或 `_` 开头，并且可以包含字母，数字，`_` 和内部标点符号 (`:.#$%&-+?<>~/`)。 以下是一些范例：
+
+    等之等之 [see @doe99, pp. 33-35; also @smith04, ch. 1]。
+
+    等之等之 [@doe99, pp. 33-35, 38-39 and *passim*]。
+
+    等之等之 [@smith04; @doe99]。
+
+`pandoc-citeproc` 可以检测 [CSL 区域环境 (locale) 文件][CSL locale files]中的定位符条目，简写和非简写形式都可行。在 `en-US` 区域环境中，定位符可以使用单数或复数，比如 `book`, `bk.`/`bks.`; `chapter`, `chap.`/`chaps.`; `column`, `col.`/`cols.`; `figure`, `fig.`/`figs.`; `folio`, `fol.`/`fols.`; `number`, `no.`/`nos.`; `line`, `l.`/`ll.`; `note`, `n.`/`nn.`; `opus`, `op.`/`opp.`; `page`, `p.`/`pp.`; `paragraph`, `para.`/`paras.`; `part`, `pt.`/`pts.`; `section`, `sec.`/`secs.`; `sub verbo`, `s.v.`/`s.vv.`; `verse`, `v.`/`vv.`; `volume`, `vol.`/`vols.`; `¶`/`¶¶`; `§`/`§§`。如果数字后没有加上定位符后缀，那么将会默认使用 "page"。
+
+[CSL locale files]: https://github.com/citation-style-language/locales
+
+在 `@` 前面添加减号 (`-`) 将会避免作者名字在引用中出现。这可用于已经提及作者名字的场合：
+
+    Smith 说了等之等之 [-@smith04]。
 
 你也可以在文本中直接插入引用信息，方式如下：
 
-    @smith04 says blah.
+    @smith04 里说到等之等之。
 
-    @smith04 [p. 33] says blah.
+    @smith04 [p. 33] 说到等之等之。
 
-如果引用格式档需要产生一份引用作品的列表，这份列表会被放在文档的最后面。一般而言，你需要以一个适当的标题结束你的文档：
+如果样式需要产生一份引用作品的列表，这份列表会被放在文档的最后面。一般而言，你需要以一个适当的标题结束你的文档：
 
-    last paragraph...
+    最后一段...
 
-    # References
+    # 参考文献
 
-如此一来参考书目就会被放在这个标题后面了。
+如此一来参考文献就会被放在这个标题后面了。注意，这个标题会自动加上 `.unnumbered` 类，所以这一部分不会被编号。
 
-[markdown]: http://daringfireball.net/projects/markdown/
-[reStructuredText]: http://docutils.sourceforge.net/docs/ref/rst/introduction.html
+如果你并没有在文章主体中引用一个条目，但是却想在参考文献中列出它，你可以定义一个虚设的 `nocite` 元数据字段，然后把引用放在这里：
+
+    ---
+    nocite: |
+      @item1, @item2
+    ...
+
+    @item3
+
+在这个例子中，文档中只会包含 `item3` 的引用，但是参考文献中会包含 `item1`，`item2` 和 `item3` 的条目。
+
+如果使用通配符，则可以创建一个参考文献列表，包含所有的引用，不论它们有没有在文档中出现。
+
+    ---
+    nocite: |
+      @*
+    ...
+
+当输出 LaTeX 或 PDF 文档时，你也可以使用 `natbib` 或 `biblatex` 来编排参考文献。具体做法是，在运行 `pandoc` 命令时，像上面提到的那样指定参考文献文件，然后加上 `--natbib` 或则 `--biblatex` 参数。记住，必须使用对应格式的参考文献文件（BibTeX 或 BibLaTeX）。
+
+请打开 [pandoc-citeproc 手册][pandoc-citeproc man page] 页面获得更多信息。
+
+[pandoc-citeproc man page]: https://github.com/jgm/pandoc-citeproc/blob/master/man/pandoc-citeproc.1.md
 
 
 本简体中文译本是基于曾于修([Tzeng Yuxio](http://tzengyuxio.me)) 的繁体字译本:
