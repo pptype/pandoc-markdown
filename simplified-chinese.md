@@ -1,11 +1,12 @@
 % [Pandoc's Markdown]
-% by John MacFarlane; Translated by [PPType](http://github.com/pptype) based on the Traditional Chinese Translation by [Tzeng Yuxio](http://pages.tzengyuxio.me/pandoc)
+% 作者：[John MacFarlane]
+% 译者：[PPType](http://github.com/pptype)
 
 前言
 --------
-本文档是 [Pandoc][] 版 Markdown 语法的简体中文翻译。Pandoc 本身是由 [John MacFarlane][] 所开发的文档转换工具，可以在 HTML, Markdown, PDF, TeX 等格式之间进行转换。有许多喜欢纯文本编辑的人，利用 Pandoc 进行论文撰写或投影片制作。除了转换功能外，Pandoc 所定义的 Markdown 扩展语法也是这套工具的一大亮点，在 Pandoc 的官方文档中，仅针对 Markdown 格式的扩展说明就占了一半左右的篇幅。
+本文档是 [Pandoc][] 版 Markdown 语法的简体中文译本。Pandoc 本身是由 [John MacFarlane][] 所开发的文档转换工具，可以在 HTML, Markdown, PDF, TeX 等格式之间进行转换。有许多喜欢纯文本编辑的人，利用 Pandoc 进行论文撰写或投影片制作。除了转换功能外，Pandoc 所定义的 Markdown 扩展语法也是这套工具的一大亮点，在 Pandoc 的官方文档中，仅针对 Markdown 格式的扩展说明就占了一半左右的篇幅。
 
-本文档翻译自 [Pandoc - Pandoc User’s Guide][userguide] 中的 "Pandoc's Markdown" 一节。你可以在 GitHub 上查看这份文档的[源文件][source]。
+本文档翻译自 [Pandoc - Pandoc User’s Guide][userguide] 中的 "Pandoc's Markdown" 一节。你可以在 GitHub 上查看本文档的[源文件][source]。
 
 [John MacFarlane]: http://johnmacfarlane.net/
 [pandoc]: http://pandoc.org
@@ -28,8 +29,7 @@ Pandoc's Markdown
 
 Markdown 的设计目标是易于书写，并且更重要的是易于阅读：
 
-> 一份 Markdown 格式的文档应该能原封不动地以纯文本形式发表，并且看上去不像是被标签或格式指令标记过。
-> <small>[John Gruber](http://daringfireball.net/projects/markdown/syntax#philosophy)</small>
+> 一份 Markdown 格式的文档应该能原封不动地以纯文本形式发表，并且看上去不像是被标签或格式指令标记过。 --- [John Gruber](http://daringfireball.net/projects/markdown/syntax#philosophy)
 
 Pandoc 在制订表格、脚注以及其他扩展的语法时都遵循了这项原则。
 
@@ -78,8 +78,8 @@ ATX 风格的标题由一到六个 `#` 符号及一行文本组成，文本后�
 
 标准 Markdown 语法并不要求在标题之上留一个空行，而 pandoc Markdown 的标题上面则必须加上空行（除非标题位于文档第一行）。这是因为 `#` 符号很可能完全意外地出现在行首（也许是因为自动断行）。考虑下面的例子：
 
-    I like several of their flavors of ice cream:
-    #22, for example, and #5.
+    我喜欢好几种他们的冰淇凌口味：
+    #22， 比如，还有 #5。
 
 ### 标题标识符 ###
 
@@ -410,14 +410,14 @@ Markdown 使用 email 的习惯来创建引用区块。一个引用区块可以�
 
 **Extension: `fancy_lists`**
 
-与标准 Markdown 不同的是，pandoc 除了使用阿拉伯数字作为有序列表的编号外，也可以使用大写或小写的英文字母，以及罗马数字。列表标记可以用括号包住，也可以紧跟一个右括号，抑或是句点，在这些标记符号和项目文本之间必须有一个空格。如果列表标记是大写字母接着一个句点，句点后请使用至少两个空格。[^2]
+与标准 Markdown 不同的是，pandoc 除了使用阿拉伯数字作为有序列表的编号外，也可以使用大写或小写的英文字母，以及罗马数字。列表标记可以用括号包住，也可以紧跟一个右括号，抑或是句点，在这些标记符号和项目文本之间必须有一个空格。如果列表标记是大写字母接着一个句点，句点后请使用至少两个空格。[^1]
 
 `fancy_lists` 扩展同样允许 "`#`" 作为有序列表的标记符，替代数字：
 
     #. 一
     #. 二
 
-[^2]:  之所以有这条规则，主要是要避免以人名缩写作为开头的段落所带来的混淆，像是
+[^1]:  之所以有这条规则，主要是要避免以人名缩写作为开头的段落所带来的混淆，像是
 
         B. Russell 是一个英国哲学家.
 
@@ -459,7 +459,7 @@ Pandoc 会注意列表标记符的种类和起始编号，如果可能的话，�
 
 **Extension: `definition_lists`**
 
-Pandoc 支持定义列表，使用了 [PHP Markdown Extra] 以及它的一些扩展：[^3]
+Pandoc 支持定义列表，使用了 [PHP Markdown Extra] 以及它的一些扩展。[^2]
 
     条目 1
 
@@ -491,8 +491,9 @@ Pandoc 支持定义列表，使用了 [PHP Markdown Extra] 以及它的一些扩
       ~ 定义 2a
       ~ 定义 2b
 
-注意，定义列表中，条目间的空行是必须的。（有一个分支放宽了这个限制，但是会禁用“偷懒”式行对齐，使用 `compact_definition_lists` 扩展来激活这个功能，参见下面的非 pandoc 扩展部分。）
-[^3]:  [David Wheeler](http://www.justatheory.com/computers/markup/modest-markdown-proposal.html) 对于 Markdown 的建议影响了我。
+注意，定义列表中，条目间的空行是必须的。（有一个变体放宽了这个限制，但是会禁用“偷懒”式行对齐，使用 `compact_definition_lists` 扩展来激活这个功能，参见下面的 [Non-pandoc 扩展]部分。）
+
+[^2]:  [David Wheeler](http://www.justatheory.com/computers/markup/modest-markdown-proposal.html) 对于 Markdown 的建议影响了我。
 
 [PHP Markdown Extra]: http://www.michelf.com/projects/php-markdown/extra/
 
@@ -595,14 +596,14 @@ Pandoc 会将以上列表转换为“紧凑列表”（在 “一”“二”或
 
     Table:  展示简单表格的语法
 
-表头与数据行必须各自维持在同一行内。列的对齐则依照表头的文本和其底下虚线的相对位置来决定：[^4]
+表头与数据行必须各自维持在同一行内。列的对齐则依照表头的文本和其底下虚线的相对位置来决定：[^3]
 
   - 如果虚线与表头文本的右侧对齐，而左侧比表头文本长，则该列为靠右对齐。
   - 如果虚线与表头文本的左侧对齐，而右侧比表头文本长，则该列为靠左对齐。
   - 如果虚线的两侧都比表头文本长，则该列为居中对齐。
   - 如果虚线与表头文本的两侧都对齐，则会套用默认的对齐方式（在大多数情况下，这将会是靠左对齐）。
 
-[^4]:  这个方案是由 Michel Fortin 在 [Markdown discussion list](http://six.pairlist.net/pipermail/markdown-discuss/2005-March/001097.html) 的讨论中所提出。
+[^3]:  这个方案是由 Michel Fortin 在 [Markdown discussion list](http://six.pairlist.net/pipermail/markdown-discuss/2005-March/001097.html) 的讨论中所提出。
 
 表格底下必须接一个空行，或是一行虚线后再加一个空行。
 如果以一行虚线结束表格，则可以不用添加表头行。例如：
@@ -975,7 +976,7 @@ TeX 数学公式会打印到所有输出格式中。至于会以什么方式编�
 
 **reStructuredText**
 
-  ~ 公式会使用 [此处](http://docutils.sourceforge.net/docs/ref/rst/roles.html#math) 所描述的 `:math:` 这个“被解读文本角色” (interpreted text role) 来编排呈现。
+  ~ 公式会使用[此处](http://docutils.sourceforge.net/docs/ref/rst/roles.html#math)所描述的 `:math:` 这个“被解读文本角色” (interpreted text role) 来编排呈现。
 
 **AsciiDoc**
 
@@ -1213,11 +1214,11 @@ Markdown 允许以如下方式指定链接。
 
 **Extension: `implicit_figures`**
 
-一个图片若自身单独存在一个段落中，那么将会以附图片说明 (caption) 的图表 (figure) 呈现。[^5]（在 LaTeX 中，会使用图表环境 (figure environment)；在 HTML 中，图片会被放在具有 `figure` 类的 `div` 元素中，并会附上一个具有 `caption` 类的 `p` 元素。）图片的 alt 文本同时也会用来作为图片说明。
+一个图片若自身单独存在一个段落中，那么将会以附图片说明 (caption) 的图表 (figure) 呈现。[^4]（在 LaTeX 中，会使用图表环境 (figure environment)；在 HTML 中，图片会被放在具有 `figure` 类的 `div` 元素中，并会附上一个具有 `caption` 类的 `p` 元素。）图片的 alt 文本同时也会用来作为图片说明。
 
     ![这是图片说明](/url/of/image.png)
 
-[^5]: 这项功能尚未在 RTF, OpenDocument 或 ODT 格式上实现。在这些格式中，你会得到一个段落，只包含图片，而没有图片说明。
+[^4]: 这项功能尚未在 RTF, OpenDocument 或 ODT 格式上实现。在这些格式中，你会得到一个段落，只包含图片，而没有图片说明。
 
 如果你只想要个普通的行内图片，那么只需要保证图片不是段落里唯一的元素即可。一个简单的方法是在图片后面插入一个不断行空格：
 
@@ -1253,7 +1254,7 @@ Spans
 
 **Extension: `bracketed_spans`**
 
-由方括号包住的一串字符，通常是用来创建一个链接，但如果它紧跟着属性的定义，那么它会被处理成带有属性的 span 元素。
+由方括号包住的一串字符，通常用来创建一个链接，但如果它紧跟着属性的定义，那么它会被处理成带有属性的 span 元素。
 
     [这是 *some text*]{.class key="val"}
 
@@ -1282,18 +1283,18 @@ Pandoc's Markdown 支持脚注功能，使用以下的语法：
     这一段将不会成为脚注的一部分，因为它
     没有缩进。
 
-脚注指向链接的 ID 不得包含空格、tabs 或换行符。这些 ID 只用于将脚注链接和脚注内容关联起来；在输出时，脚注将会依次递增编号。
+脚注链接的 ID 不得包含空格、tabs 或换行符。这些 ID 只用于将脚注链接和脚注内容关联起来；在输出时，脚注将会依次递增编号。
 
 脚注本身不需要放在文档的最后面。它们可以放在文档里的任何地方，但不能被放入区块元素（列表、区块引用、表格等）之中。每一个脚注都必须使用前后的空行，将其与周围内容（包括其他脚注）隔离开。
 
 **Extension: `inline_notes`**
 
-Pandoc 也支持了行内脚注（尽管，与一般脚注不同，行内脚注不能包含多个段落）。其语法如下：
+Pandoc 也支持行内脚注（尽管与一般脚注不同，行内脚注不能包含多个段落）。其语法如下：
 
     这是一个行内脚注。^[行内脚注更容易书写，因为你不需要特意选择一
     个标识符，然后再到下面去输入脚注内容。]
 
-行内与普通脚注可以自由混合使用。
+行内脚注与普通脚注可以自由混合使用。
 
 引用
 ---------
@@ -1433,10 +1434,140 @@ Pandoc 也支持了行内脚注（尽管，与一般脚注不同，行内脚注�
 
 当输出 LaTeX 或 PDF 文档时，你也可以使用 `natbib` 或 `biblatex` 来编排参考文献。具体做法是，在运行 `pandoc` 命令时，像上面提到的那样指定参考文献文件，然后加上 `--natbib` 或则 `--biblatex` 参数。记住，必须使用对应格式的参考文献文件（BibTeX 或 BibLaTeX）。
 
-请打开 [pandoc-citeproc 手册][pandoc-citeproc man page] 页面获得更多信息。
+请打开 [pandoc-citeproc 手册][pandoc-citeproc man page]页面获得更多信息。
 
 [pandoc-citeproc man page]: https://github.com/jgm/pandoc-citeproc/blob/master/man/pandoc-citeproc.1.md
 
+Non-pandoc 扩展
+---------------
 
-本简体中文译本是基于曾于修([Tzeng Yuxio](http://tzengyuxio.me)) 的繁体字译本:
-[home]: http://pages.tzengyuxio.me/pandoc/
+以下的 Markdown 语法扩展在 pandoc 中默认是关闭的，但是可以通过添加 `+EXTENSION` 到格式名称中，来启用这些扩展，`EXTENSION` 就是扩展的名字。比如 `markdown+hard_line_breaks` 表示带有强制换行符的 Markdown。
+
+**Extension: `angle_brackets_escapable`**
+
+允许对 `<` 和 `>` 进行反斜线转义，GitHub 风格的 Markdown 支持这种做法，但原始的 Markdown 不支持。Pandoc 默认的 `all_symbols_escapable` 扩展已经隐含了这个功能。
+
+**Extension: `list_without_preceding_blankline`**
+
+允许段落之后立即接上一个列表，不需要在中间插入空行。
+
+**Extension: `hard_line_breaks`**
+
+将导致段落内部的所有换行符都被解读成强制换行符，而不是空格。
+
+**Extension: `ignore_line_breaks`**
+
+将导致段落内部的换行符被忽略，而不是解读成空格或强制换行符。这个选项是为东亚语言准备的，因为这些语言中词语之间没有空格，但是文本会通过断行提高可读性。
+
+**Extension: `east_asian_line_breaks`**
+
+当段落内部的换行符出现在两个东亚语言字符宽度的字符之间时，这个扩展将导致这些换行符被忽略，而不是被解读成空格或强制换行符。当文本中混合了东亚语言字符宽度的字符和其他语言字符时，这个扩展要优于 `ignore_line_breaks`。
+
+**Extension: `emoji`**
+
+将文本表情，比如 `:smile:`，解析成 Unicode 表情符号。
+
+**Extension: `tex_math_single_backslash`**
+
+将导致位于 `\(` 和 `\)` 之间的所有内容被解读为行内 TeX 数学公式，而 `\[` 和 `\]` 之间的所有内容将被解读为显示用 TeX 数学公式（display TeX math）。注意：这个扩展的缺点是会使 `(` 和 `[` 的转义失效。
+
+**Extension: `tex_math_double_backslash`**
+
+将导致位于 `\\(` 和 `\\)` 之间的所有内容被解读为行内 TeX 数学公式，而 `\\[` 和 `\\]` 之间的所有内容将被解读为显示用 TeX 数学公式（display TeX math）。
+
+**Extension: `markdown_attribute`**
+
+Pandoc 默认将区块级别标签内的文本解读为 Markdown。这个扩展会改变这种行为，只有区块标签带有属性 `markdown=1` 时，内部的文本才会解读为 Markdown。
+
+**Extension: `mmd_title_block`**
+
+允许在文档开头使用 [MultiMarkdown][Multimarkdown] 风格的题目区块，比如：
+
+    Title:   我的题目
+    Author:  杜约翰
+    Date:    September 1, 2008
+    Comment: 这是 mmd 题目区块的例子，有一个字段
+             的内容跨越多行。
+
+更多细节请查看 MultiMarkdown 的文档。如果 `pandoc_title_block` 或者 `yaml_metadata_block` 被启用，那么它们的优先级高于 `mmd_title_block`。
+
+[MultiMarkdown]: http://fletcherpenney.net/multimarkdown/
+
+**Extension: `abbreviations`**
+
+用于解析 PHP Markdown Extra 中的缩略词索引 (keys)，例如
+
+    *[HTML]: Hypertext Markup Language
+
+注意，pandoc 文档模型不支持缩略词，所以如果启用了这个扩展，形如上面例子中的缩略词键值对将被直接跳过（而不是解读为一个段落）。
+
+**Extension: `autolinks_bare_uris`**
+
+将所有的绝对 URI （统一资源定位符）变成链接，即使它没有被尖括号 `<...>` 包围。
+
+**Extension: `ascii_identifiers`**
+
+将 `auto_identifiers` 扩展生成的标识符 ID 变成纯粹的 ASCII 字符。带有音调的拉丁字母将被去掉音调，并且非拉丁字母会被忽略。
+
+**Extension: `mdd_link_attributes`**
+
+解析 multimarkdown 样式中链接和图片的属性键值对 (key-value)。请勿将这个扩展与 `link_attributes` 混淆。
+
+    这是一个指向![图片][ref]，带有 multimarkdown 格式的属性。
+
+    [ref]: http://path.to/image "图片标题" width=20px height=30px
+           id=myId class="myClass1 myClass2"
+
+**Extension: `mmd_header_identifiers`**
+
+解析 multimarkdown 样式的标题标识符（位于方括号之中，在标题之后，但是在 ATX 标题末尾的 `#` 之前）。
+
+**Extension: `compact_definition_lists`**
+
+激活 pandoc 1.12.x 和更早版本中的定义列表语法。这个语法与上面提到的[定义列表]有这几方面的不同：
+
+- 定义列表中的相邻条目之间不需要空行。
+
+- 省略相邻条目间的空行，可以得到“紧凑”的列表；条目和其定义之间的空行没有任何实际影响。
+
+- 不支持段落的偷懒式断行：整个定义必须缩进四个空格。[^5]
+
+[^5]: 为了理解为何放宽条目间的空行要求后，偷懒式断行将不可行，可以考虑以下的例子：
+
+        bar
+        :    definition
+        foo
+        :    definition
+
+    这是一个列表条目“bar”，带有两个定义，其中第一个定义是偷懒式断行，还是说，是两个列表条目“bar”和“foo”？为了消除歧义，我们必须作出一种选择，要么禁止偷懒式断行，要么在列表条目中插入空行。
+
+Markdown 变体
+-------------
+
+除了 pandoc 扩展的 Markdown，也支持以下几种 Markdown 变体：
+
+`markdown_phpextra` (**PHP Markdown Extra**)
+    `footnotes`, `pipe_tables`, `raw_html`, `markdown_attribute`, `fenced_code_blocks`, `definition_lists`, `intraword_underscores`, `header_attributes`, `link_attributes`, `abbreviations`, `shortcut_reference_links`.
+
+`markdown_github` (**GitHub-Flavored Markdown**)
+    `pipe_tables`, `raw_html`, `fenced_code_blocks`, `auto_identifiers`, `ascii_identifiers`, `backtick_code_blocks`, `autolink_bare_uris`, `intraword_underscores`, `strikeout`, `hard_line_breaks`, `emoji`, `shortcut_reference_links`, `angle_brackets_escapable`.
+
+`markdown_mmd` (**MultiMarkdown**)
+    `pipe_tables`, `raw_html`, `markdown_attribute`, `mmd_link_attributes`, `tex_math_double_backslash`, `intraword_underscores`, `mmd_title_block`, `footnotes`, `definition_lists`, `all_symbols_escapable`, `implicit_header_references`, `auto_identifiers`, `mmd_header_identifiers`, `shortcut_reference_links`.
+
+`markdown_strict` (**Markdown.pl**)
+    `raw_html`
+
+能够在非 Markdown 文件中使用的扩展
+----------------------------------
+
+上面讨论的扩展中，有一些可以在非 Markdown 文档中使用：
+
+- `auto_identifiers` 可以在 `latex`，`rst`，`mediawiki`，和 `textile` 输入文档中使用（默认）。
+
+- `tex_math_dollars`，`tex_math_single_backslash`，`tex_math_double_backslash` 可以在 `html` 输入文档中使用。（举例来说，在读取使用 MathJax 格式化的网页文档时非常方便。）
+
+
+本简体中文译本是基于曾于修([Tzen Yuxio](http://tzengyuxio.me)) 的[繁体译本][Traditional Chinese]。
+
+[Traditional Chinese]: http://pages.tzengyuxio.me/pandoc/
